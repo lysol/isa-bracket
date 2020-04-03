@@ -5,7 +5,8 @@ bracket_length = 120.02;
 bracket_width_length = 112.78;
 bottom_tab_width = 10.19;
 bracket_width = 18.29;
-bracket_depth = 0.81;
+bracket_depth = 1; // base bracket depth
+
 
 bracket_reinforce_width = bracket_width * .3;
 bracket_reinforce_length = bracket_length * .75;
@@ -68,15 +69,15 @@ module prism(l, w, h){
 
 // top tab
 
-translate([0, -top_tab_y, bracket_depth]) difference() {
-    cube([bracket_depth, top_tab_width, top_tab_length]);
-    translate([-.5, -1, top_tab_screw_groove_translate_z]) {
+translate([-bracket_depth, -top_tab_y, 0]) difference() {
+    cube([bracket_depth, top_tab_width, top_tab_length + bracket_depth]);
+    translate([-.5, -1, top_tab_screw_groove_translate_z + bracket_depth]) {
         cube([bracket_depth + 1, top_tab_screw_groove_center * 2, top_tab_screw_groove_dia]);
         translate([1, top_tab_screw_groove_center * 2, top_tab_screw_groove_dia / 2])
             rotate([0, 90, 0])
             cylinder(r=top_tab_screw_groove_dia / 2, h=2, $fn=20, center=true);
     }
-    translate([-.5, top_tab_useless_notch_y, top_tab_useless_notch_z]) {
+    translate([-.5, top_tab_useless_notch_y, top_tab_useless_notch_z + bracket_depth]) {
         cube([bracket_depth + 1, top_tab_useless_notch_length, top_tab_useless_notch_width + 1]);
     }
 }
@@ -103,10 +104,10 @@ module screwmount(x) {
                     diameter=screw_mount_thread_dia,
                     threads_per_inch=screw_mount_thread_tpi, length=screw_mount_depth / 5);
             // taper the tabs to create more space on the sides in case there are solder joints etc
-            translate([-.1, 3, screw_mount_width - 3])
+            translate([-.1, 4, screw_mount_width - 3])
                 rotate([90, 180, 90])
                 prism(screw_mount_width, screw_mount_length + 4, screw_mount_depth + 2);
-            translate([screw_mount_width + .1, -3, screw_mount_width - 3])
+            translate([screw_mount_width + .1, -4, screw_mount_width - 3])
                 rotate([-90, 0, 90])
                 prism(screw_mount_width, screw_mount_length + 4, screw_mount_depth + 2);            
         }
