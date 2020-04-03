@@ -13,7 +13,7 @@ bracket_reinforce_depth = 1.5;
 bracket_reinforce_offset_x = -8;
 bracket_reinforce_offset_y = -3;
 bracket_cross_reinforce_width = 3;
-bracket_cross_reinforce_length = bracket_width * 0.3;
+bracket_cross_reinforce_length = bracket_width * 0.4;
 bracket_cross_vec_x = [
     bracket_length * .5 - bracket_cross_reinforce_width / 2,
     bracket_length * .25 - bracket_cross_reinforce_width / 2,
@@ -27,13 +27,14 @@ bracket_hole_distance = 107.01;
 bracket_bottom_tab_angle_length = (bracket_width - bottom_tab_width) / 2;
 
 screw_mount_width = 9;
-screw_mount_length = 8.1;
-screw_mount_depth = bracket_depth;
+screw_mount_length = 8.1 + bracket_depth;
+screw_mount_depth = bracket_depth * 3;
 screw_mount_thread_dia = 0.1120; // inches
 screw_mount_thread_tpi = 40;
-screw_mount_thread_distance = 5.33;
+screw_mount_thread_distance = 5.33 + bracket_depth;
 screw_mount_bulk_r = 2.5;
-screw_mount_bulk_depth = 2;
+screw_mount_bulk_depth = 1;
+screw_mount_caulking = 1.5;
 
 first_mount_x = 31.75;
 second_mount_x = first_mount_x + 56.52;
@@ -82,25 +83,32 @@ translate([0, -top_tab_y, bracket_depth]) difference() {
 
 // screw mounts
 module screwmount(x) {
-    translate([x - screw_mount_width / 2, bracket_width - screw_mount_depth, -screw_mount_length])
+    translate([x - screw_mount_width / 2, bracket_width, -screw_mount_length + bracket_depth])
         // cut out the threads
         difference() {
             union() {
                 cube([screw_mount_width, screw_mount_depth, screw_mount_length]);
-                translate([screw_mount_width / 2, 0, screw_mount_length - screw_mount_thread_distance])
+                translate([screw_mount_width / 2, screw_mount_depth, screw_mount_length - screw_mount_thread_distance])
                     rotate([0, 90, 90])
                     cylinder(r=screw_mount_bulk_r, h=screw_mount_bulk_depth, $fn=6);
+                // add just a tiny bit of stuff to make the connection better
+                difference() {
+                    translate([0, -.5 * screw_mount_caulking, screw_mount_length - screw_mount_caulking * .5])
+                        rotate(a=-45, v=[1, 0, 0]) cube([screw_mount_width, screw_mount_depth, screw_mount_caulking]);
+                    translate([-5, -5, screw_mount_length]) cube([15, 15, 1]);
+                }
             }
             translate([screw_mount_width / 2, -2, screw_mount_length - screw_mount_thread_distance])
                 rotate([0, 90, 90]) english_thread(
                     diameter=screw_mount_thread_dia,
-                    threads_per_inch=screw_mount_thread_tpi, length=screw_mount_depth);
-            translate([0 - .1, 2, screw_mount_width])
+                    threads_per_inch=screw_mount_thread_tpi, length=screw_mount_depth / 5);
+            // taper the tabs to create more space on the sides in case there are solder joints etc
+            translate([-.1, 3, screw_mount_width - 3])
                 rotate([90, 180, 90])
-                prism(screw_mount_width, screw_mount_length + 1, screw_mount_depth + 2);
-            translate([screw_mount_width + .1, -2, screw_mount_width])
+                prism(screw_mount_width, screw_mount_length + 4, screw_mount_depth + 2);
+            translate([screw_mount_width + .1, -3, screw_mount_width - 3])
                 rotate([-90, 0, 90])
-                prism(screw_mount_width, screw_mount_length + 1, screw_mount_depth + 2);            
+                prism(screw_mount_width, screw_mount_length + 4, screw_mount_depth + 2);            
         }
 }
 
@@ -116,7 +124,7 @@ translate([
 // x-reinforce bracket body
 for(x = [0:2]) {
     translate([
-        bracket_cross_vec_x[x],
+        bracket_cross_vec_x[x] + bracket_reinforce_offset_x,
         bracket_width / 2 - bracket_cross_reinforce_length / 2,
         -bracket_reinforce_depth])
         cube([bracket_cross_reinforce_width, bracket_cross_reinforce_length, bracket_reinforce_depth]);
