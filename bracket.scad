@@ -5,15 +5,15 @@ bracket_length = 120.02;
 bracket_width_length = 112.78;
 bottom_tab_width = 10.19;
 bracket_width = 18.29;
-bracket_depth = 1; // base bracket depth
+bracket_depth = 1.2; // base bracket depth
 
 
-bracket_reinforce_width = bracket_width * .3;
+bracket_reinforce_width = bracket_width * .1;
 bracket_reinforce_length = bracket_length * .75;
-bracket_reinforce_depth = 1.5;
+bracket_reinforce_depth = 0.5;
 bracket_reinforce_offset_x = -8;
-bracket_reinforce_offset_y = -3;
-bracket_cross_reinforce_width = 3;
+bracket_reinforce_offset_y = -2;
+bracket_cross_reinforce_width = 2;
 bracket_cross_reinforce_length = bracket_width * 0.4;
 bracket_cross_vec_x = [
     bracket_length * .5 - bracket_cross_reinforce_width / 2,
@@ -35,7 +35,7 @@ screw_mount_thread_tpi = 40;
 screw_mount_thread_distance = 5.33 + bracket_depth;
 screw_mount_bulk_r = 2.5;
 screw_mount_bulk_depth = 1;
-screw_mount_caulking = 1.5;
+screw_mount_caulking = 2;
 
 first_mount_x = 31.75;
 second_mount_x = first_mount_x + 56.52;
@@ -157,7 +157,7 @@ difference() {
     translate([
         bracket_width_length,
         bracket_bottom_tab_angle_length - .05,
-        1])
+        2])
         rotate([0, 90, 0])
         rotate([180, 0, 0])    
         prism(bracket_bottom_tab_angle_length, bracket_bottom_tab_angle_length, bracket_bottom_tab_angle_length + 0.1);
@@ -165,7 +165,7 @@ difference() {
     translate([
         bracket_width_length + 0.1,
         bracket_bottom_tab_angle_length + bottom_tab_width + .05,
-        -1])
+        -2])
         rotate([0, 90, 0])
         rotate([180, 0, 180])    
         prism(bracket_bottom_tab_angle_length, bracket_bottom_tab_angle_length, bracket_bottom_tab_angle_length + 0.1);    
