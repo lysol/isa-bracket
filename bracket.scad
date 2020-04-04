@@ -117,18 +117,23 @@ screwmount(first_mount_x);
 screwmount(second_mount_x);
 
 // reinforce bracket body
-translate([
-    bracket_length / 2 - bracket_reinforce_length / 2 + bracket_reinforce_offset_x,
-    bracket_width / 2 - bracket_reinforce_width / 2 + bracket_reinforce_offset_y,
-    -bracket_reinforce_depth])
-    cube([bracket_reinforce_length, bracket_reinforce_width, bracket_reinforce_depth]);
-// x-reinforce bracket body
-for(x = [0:2]) {
-    translate([
-        bracket_cross_vec_x[x] + bracket_reinforce_offset_x,
-        bracket_width / 2 - bracket_cross_reinforce_length / 2,
-        -bracket_reinforce_depth])
-        cube([bracket_cross_reinforce_width, bracket_cross_reinforce_length, bracket_reinforce_depth]);
+minkowski() {
+    union() {
+        translate([
+            bracket_length / 2 - bracket_reinforce_length / 2 + bracket_reinforce_offset_x,
+            bracket_width / 2 - bracket_reinforce_width / 2 + bracket_reinforce_offset_y,
+            -bracket_reinforce_depth])
+            cube([bracket_reinforce_length, bracket_reinforce_width, bracket_reinforce_depth]);
+        // x-reinforce bracket body
+        for(x = [0:2]) {
+            translate([
+                bracket_cross_vec_x[x] + bracket_reinforce_offset_x,
+                bracket_width / 2 - bracket_cross_reinforce_length / 2,
+                -bracket_reinforce_depth])
+                rotate(a=45, v=[0, 0, 1]) cube([bracket_cross_reinforce_width, bracket_cross_reinforce_length, bracket_reinforce_depth]);
+        }
+    }
+    sphere(r=1, $fa=5, $fs=0.5);
 }
 
 
