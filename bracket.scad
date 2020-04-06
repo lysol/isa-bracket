@@ -51,9 +51,6 @@ cf_slot_distance = 6.35 + first_mount_x;
 cf_slot_width = 47.625;
 cf_slot_height = 5;
 cf_slot_y = 1;
-cf_slot_lip_height = 2;
-cf_slot_lip_depth = 0.5;
-
 
 notch_width = 2.79;
 notch_length = notch_width;
@@ -154,14 +151,7 @@ translate([
     -shiftover_width,
     bracket_depth])
     rotate([0, 90, 0])  
-    prism(bracket_depth, shiftover_width, shiftover_width);   
-
-// adds a little lip if you are enabling the cf slot
-if (cf_slot_enabled) {
-    translate([0, -screw_mount_y, 0])
-    translate([cf_slot_distance - cf_slot_width * .045, bracket_width - cf_slot_lip_depth / 2, -cf_slot_lip_height])
-        cube([cf_slot_width * 1.09, cf_slot_lip_depth, cf_slot_lip_height]);
-}
+    prism(bracket_depth, shiftover_width, shiftover_width);
 
 // Main bracket part
 difference() {
