@@ -28,7 +28,7 @@ bracket_hole_distance = 107.01;
 bracket_bottom_tab_angle_length = (bracket_width - bottom_tab_width) / 2;
 
 screw_mount_width = 9;
-screw_mount_length = 8.1 + bracket_depth;
+screw_mount_length = 8.5 + bracket_depth;
 screw_mount_depth = bracket_depth * 3;
 screw_mount_thread_dia = 0.1120; // inches
 screw_mount_thread_tpi = 40;
@@ -103,13 +103,6 @@ module screwmount(x) {
                 rotate([0, 90, 90]) english_thread(
                     diameter=screw_mount_thread_dia,
                     threads_per_inch=screw_mount_thread_tpi, length=screw_mount_depth / 5);
-            // taper the tabs to create more space on the sides in case there are solder joints etc
-            translate([-.1, 4, screw_mount_width - 3])
-                rotate([90, 180, 90])
-                prism(screw_mount_width, screw_mount_length + 4, screw_mount_depth + 2);
-            translate([screw_mount_width + .1, -4, screw_mount_width - 3])
-                rotate([-90, 0, 90])
-                prism(screw_mount_width, screw_mount_length + 4, screw_mount_depth + 2);            
         }
 }
 
