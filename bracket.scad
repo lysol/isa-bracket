@@ -5,7 +5,7 @@ bracket_length = 120.02;
 bracket_width_length = 112.78;
 bottom_tab_width = 10.19;
 bracket_width = 18.29;
-bracket_depth = 1.2; // base bracket depth
+bracket_depth = 1; // base bracket depth
 
 
 bracket_reinforce_width = bracket_width * .1;
