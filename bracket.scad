@@ -28,11 +28,10 @@ bracket_hole_distance = 107.01;
 bracket_bottom_tab_angle_length = (bracket_width - bottom_tab_width) / 2;
 
 screw_mount_width = 9;
-screw_mount_length = 8.5 + bracket_depth;
 screw_mount_depth = bracket_depth * 3;
 screw_mount_thread_dia = 0.1120; // inches
 screw_mount_thread_tpi = 40;
-screw_mount_thread_distance = 5.33 + bracket_depth;
+screw_mount_thread_distance_base = 0.5675;
 screw_mount_bulk_r = 2.5;
 screw_mount_bulk_depth = 1;
 screw_mount_caulking = 2;
@@ -42,6 +41,8 @@ first_mount_x = 31.75;
 cf_slot_enabled = true;
 
 screw_mount_distance = cf_slot_enabled ? 60.325 : 56.52;
+screw_mount_thread_distance = (cf_slot_enabled ? 6.35 : 4.7625) + screw_mount_thread_distance_base + bracket_depth;
+screw_mount_length = screw_mount_thread_distance * 1.4 + bracket_depth;
 
 second_mount_x = first_mount_x + screw_mount_distance;
 
