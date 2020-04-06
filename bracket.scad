@@ -36,9 +36,22 @@ screw_mount_thread_distance = 5.33 + bracket_depth;
 screw_mount_bulk_r = 2.5;
 screw_mount_bulk_depth = 1;
 screw_mount_caulking = 2;
-
 first_mount_x = 31.75;
-second_mount_x = first_mount_x + 56.52;
+
+// Slot for the CF Card
+cf_slot_enabled = true;
+
+screw_mount_distance = cf_slot_enabled ? 60.325 : 56.52;
+
+second_mount_x = first_mount_x + screw_mount_distance;
+
+cf_slot_distance = 6.35 + first_mount_x;
+cf_slot_width = 47.625;
+cf_slot_height = 5;
+cf_slot_y = 1;
+cf_slot_lip_height = 1.5;
+cf_slot_lip_depth = 0.5;
+
 
 notch_width = 2.79;
 notch_length = notch_width;
@@ -141,10 +154,22 @@ translate([
     rotate([0, 90, 0])  
     prism(bracket_depth, shiftover_width, shiftover_width);   
 
+// adds a little lip if you are enabling the cf slot
+if (cf_slot_enabled) {
+    translate([cf_slot_distance - cf_slot_width * .04, bracket_width - cf_slot_lip_depth, -cf_slot_lip_height])
+        cube([cf_slot_width * 1.08, cf_slot_lip_depth, cf_slot_lip_height]);
+}
+
 // Main bracket part
 difference() {
     // the base bracket
     cube([bracket_length, bracket_width, bracket_depth]);
+    
+    // cf slot if enabled
+    if (cf_slot_enabled) {
+        translate([cf_slot_distance, bracket_width - cf_slot_height - cf_slot_y, -bracket_depth / 2])
+            cube([cf_slot_width, cf_slot_height, bracket_depth * 2]);
+    }
     
     // shape the tab at the bottom
     translate([bracket_width_length - 0.05, -.05, -.5])
