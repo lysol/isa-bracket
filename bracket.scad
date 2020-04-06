@@ -12,7 +12,7 @@ bracket_reinforce_width = bracket_width * .1;
 bracket_reinforce_length = bracket_length * .75;
 bracket_reinforce_depth = 0.7;
 bracket_reinforce_offset_x = -8;
-bracket_reinforce_offset_y = -2;
+bracket_reinforce_offset_y = -3;
 bracket_cross_reinforce_width = 2;
 bracket_cross_reinforce_length = bracket_width * 0.4;
 bracket_cross_vec_x = [
@@ -35,7 +35,6 @@ screw_mount_thread_distance_base = 0.5675;
 screw_mount_bulk_r = 2.5;
 screw_mount_bulk_depth = 1;
 screw_mount_caulking = 2;
-first_mount_x = 31.75;
 
 // Slot for the CF Card
 cf_slot_enabled = true;
@@ -44,7 +43,9 @@ screw_mount_distance = cf_slot_enabled ? 60.325 : 56.52;
 screw_mount_thread_distance = (cf_slot_enabled ? 6.35 : 4.7625) + screw_mount_thread_distance_base + bracket_depth;
 screw_mount_length = screw_mount_thread_distance * 1.4 + bracket_depth;
 
+first_mount_x = cf_slot_enabled ? 28.00 : 31.75;
 second_mount_x = first_mount_x + screw_mount_distance;
+screw_mount_y = cf_slot_enabled ? 5 : 0;
 
 cf_slot_distance = 6.35 + first_mount_x;
 cf_slot_width = 47.625;
@@ -99,6 +100,7 @@ translate([0, -top_tab_y, 0]) difference() {
 
 // screw mounts
 module screwmount(x) {
+    translate([0, -screw_mount_y, 0]) // easier to be explicit here than factor it in the below statement
     translate([x - screw_mount_width / 2, bracket_width, -screw_mount_length + bracket_depth])
         // cut out the threads
         difference() {
@@ -136,7 +138,7 @@ union() {
     for(x = [0:2]) {
         translate([
             bracket_cross_vec_x[x] + bracket_reinforce_offset_x,
-            bracket_width / 2 - bracket_cross_reinforce_length / 2 - 3,
+            bracket_width / 2 - bracket_cross_reinforce_length / 2 - 5,
             -bracket_reinforce_depth])
             rotate(a=45, v=[0, 0, 1]) cube([bracket_cross_reinforce_width, bracket_cross_reinforce_length, bracket_reinforce_depth]);
     }
@@ -156,6 +158,7 @@ translate([
 
 // adds a little lip if you are enabling the cf slot
 if (cf_slot_enabled) {
+    translate([0, -screw_mount_y, 0])
     translate([cf_slot_distance - cf_slot_width * .045, bracket_width - cf_slot_lip_depth / 2, -cf_slot_lip_height])
         cube([cf_slot_width * 1.09, cf_slot_lip_depth, cf_slot_lip_height]);
 }
@@ -167,6 +170,7 @@ difference() {
     
     // cf slot if enabled
     if (cf_slot_enabled) {
+        translate([0, -screw_mount_y, 0])
         translate([cf_slot_distance, bracket_width - cf_slot_height - cf_slot_y, -bracket_depth / 2])
             cube([cf_slot_width, cf_slot_height, bracket_depth * 2]);
     }
