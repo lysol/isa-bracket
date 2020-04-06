@@ -49,7 +49,7 @@ cf_slot_distance = 6.35 + first_mount_x;
 cf_slot_width = 47.625;
 cf_slot_height = 5;
 cf_slot_y = 1;
-cf_slot_lip_height = 1.5;
+cf_slot_lip_height = 2;
 cf_slot_lip_depth = 0.5;
 
 
@@ -156,8 +156,8 @@ translate([
 
 // adds a little lip if you are enabling the cf slot
 if (cf_slot_enabled) {
-    translate([cf_slot_distance - cf_slot_width * .04, bracket_width - cf_slot_lip_depth, -cf_slot_lip_height])
-        cube([cf_slot_width * 1.08, cf_slot_lip_depth, cf_slot_lip_height]);
+    translate([cf_slot_distance - cf_slot_width * .045, bracket_width - cf_slot_lip_depth / 2, -cf_slot_lip_height])
+        cube([cf_slot_width * 1.09, cf_slot_lip_depth, cf_slot_lip_height]);
 }
 
 // Main bracket part
