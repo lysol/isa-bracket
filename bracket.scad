@@ -69,7 +69,7 @@ module prism(l, w, h){
 
 // top tab
 
-translate([-bracket_depth, -top_tab_y, 0]) difference() {
+translate([0, -top_tab_y, 0]) difference() {
     cube([bracket_depth, top_tab_width, top_tab_length + bracket_depth]);
     translate([-.5, -1, top_tab_screw_groove_translate_z + bracket_depth]) {
         cube([bracket_depth + 1, top_tab_screw_groove_center * 2, top_tab_screw_groove_dia]);
