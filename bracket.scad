@@ -135,7 +135,7 @@ minkowski() {
         for(x = [0:2]) {
             translate([
                 bracket_cross_vec_x[x] + bracket_reinforce_offset_x,
-                bracket_width / 2 - bracket_cross_reinforce_length / 2,
+                bracket_width / 2 - bracket_cross_reinforce_length / 2 - 3,
                 -bracket_reinforce_depth])
                 rotate(a=45, v=[0, 0, 1]) cube([bracket_cross_reinforce_width, bracket_cross_reinforce_length, bracket_reinforce_depth]);
         }
