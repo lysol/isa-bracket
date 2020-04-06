@@ -51,14 +51,15 @@ top_tab_length = 11.43;
 
 top_tab_y = notch_width;
 top_tab_screw_groove_dia = 4.42;
-top_tab_screw_groove_center = 3.18;
+top_tab_screw_groove_fudge = -0.4; // kinda came out looking wrong so I'm faking it a bit here
+top_tab_screw_groove_center = 3.18 + top_tab_screw_groove_fudge;
 top_tab_screw_groove_distance = 6.35;
 top_tab_screw_groove_translate_z = top_tab_length - top_tab_screw_groove_dia / 2 - top_tab_screw_groove_distance;
 
 top_tab_useless_notch_length = 3.05;
 top_tab_useless_notch_width = top_tab_screw_groove_distance - top_tab_screw_groove_dia / 2;
 top_tab_useless_notch_z = top_tab_length - top_tab_useless_notch_width;
-top_tab_useless_notch_y = top_tab_useless_notch_width + 8.05 - top_tab_useless_notch_length / 2;
+top_tab_useless_notch_y = top_tab_useless_notch_width / 2 + 8.05 - top_tab_useless_notch_length / 2;
 
 module prism(l, w, h){
        polyhedron(
