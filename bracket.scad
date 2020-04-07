@@ -2,13 +2,13 @@ bracket_length = 120.02;
 bracket_width_length = 112.78;
 bottom_tab_width = 10.19;
 bracket_width = 18.29;
-bracket_depth = 1; // base bracket depth
+bracket_depth = 1.4; // base bracket depth
 
 
 bracket_reinforce_width = bracket_width * .2;
-bracket_reinforce_length = bracket_length * .75;
-bracket_reinforce_depth = 1;
-bracket_reinforce_offset_x = -8;
+bracket_reinforce_length = bracket_length * .78;
+bracket_reinforce_depth = 2;
+bracket_reinforce_offset_x = -6;
 bracket_reinforce_offset_y = -5;
 
 bracket_hole_dia = 4.75;
@@ -17,7 +17,7 @@ bracket_hole_distance = 107.01;
 bracket_bottom_tab_angle_length = (bracket_width - bottom_tab_width) / 2;
 
 screw_mount_width = 9;
-screw_mount_depth = bracket_depth * 4;
+screw_mount_depth = 4;
 screw_mount_hole_r = 1.55; // m3 bolt
 screw_mount_thread_distance_base = 0.5675;
 screw_mount_inset_r = 2.9; // m3 bolt head
@@ -50,6 +50,7 @@ shiftover_length = shiftover_width;
 
 top_tab_width = 18.01 + bracket_depth / 3; // had to fudge this
 top_tab_length = 11.43;
+top_tab_x = 1;
 
 top_tab_y = notch_width;
 top_tab_screw_groove_dia = 4.42;
@@ -63,7 +64,7 @@ top_tab_useless_notch_width = top_tab_screw_groove_distance - top_tab_screw_groo
 top_tab_useless_notch_z = top_tab_length - top_tab_useless_notch_width;
 top_tab_useless_notch_y = top_tab_useless_notch_width / 2 + 8.05 - top_tab_useless_notch_length / 2;
 
-top_tab_depth = bracket_depth * 3;
+top_tab_depth = 3;
 
 module prism(l, w, h){
        polyhedron(
@@ -74,7 +75,7 @@ module prism(l, w, h){
 
 // top tab
 
-translate([-top_tab_depth + bracket_depth, -top_tab_y, 0]) difference() {
+translate([-top_tab_depth + top_tab_x, -top_tab_y, 0]) difference() {
     cube([top_tab_depth, top_tab_width, top_tab_length + bracket_depth]);
     translate([-.5, -1, top_tab_screw_groove_translate_z + bracket_depth]) {
         cube([top_tab_depth + 1, top_tab_screw_groove_center * 2, top_tab_screw_groove_dia]);
