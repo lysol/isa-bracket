@@ -44,6 +44,8 @@ cf_slot_width = 47.625;
 cf_slot_height = 5;
 cf_slot_y = 1;
 
+cf_reinforce_screwmount_depth = 3;
+
 notch_width = 2.79;
 notch_length = notch_width;
 
@@ -119,12 +121,17 @@ screwmount(second_mount_x);
 
 // reinforce bracket body
 
-union() {
+translate([
+    bracket_length / 2 - bracket_reinforce_length / 2 + bracket_reinforce_offset_x,
+    bracket_width / 2 - bracket_reinforce_width / 2 + bracket_reinforce_offset_y,
+    -bracket_reinforce_depth])
+    cube([bracket_reinforce_length, bracket_reinforce_width, bracket_reinforce_depth]);
+if (cf_slot_enabled) {
     translate([
         bracket_length / 2 - bracket_reinforce_length / 2 + bracket_reinforce_offset_x,
-        bracket_width / 2 - bracket_reinforce_width / 2 + bracket_reinforce_offset_y,
-        -bracket_reinforce_depth])
-        cube([bracket_reinforce_length, bracket_reinforce_width, bracket_reinforce_depth]);
+        bracket_width - bracket_reinforce_width,
+        -cf_reinforce_screwmount_depth])
+        cube([bracket_reinforce_length, bracket_reinforce_width, cf_reinforce_screwmount_depth]);
 }
 
 
