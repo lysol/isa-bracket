@@ -8,19 +8,11 @@ bracket_width = 18.29;
 bracket_depth = 1; // base bracket depth
 
 
-bracket_reinforce_width = bracket_width * .1;
+bracket_reinforce_width = bracket_width * .2;
 bracket_reinforce_length = bracket_length * .75;
-bracket_reinforce_depth = 0.7;
+bracket_reinforce_depth = 1;
 bracket_reinforce_offset_x = -8;
-bracket_reinforce_offset_y = -3;
-bracket_cross_reinforce_width = 2;
-bracket_cross_reinforce_length = bracket_width * 0.4;
-bracket_cross_vec_x = [
-    bracket_length * .5 - bracket_cross_reinforce_width / 2,
-    bracket_length * .25 - bracket_cross_reinforce_width / 2,
-    bracket_length * .75 - bracket_cross_reinforce_width / 2
-    ];
-
+bracket_reinforce_offset_y = -5;
 
 bracket_hole_dia = 4.75;
 bracket_hole_distance = 107.01;
@@ -133,14 +125,6 @@ union() {
         bracket_width / 2 - bracket_reinforce_width / 2 + bracket_reinforce_offset_y,
         -bracket_reinforce_depth])
         cube([bracket_reinforce_length, bracket_reinforce_width, bracket_reinforce_depth]);
-    // x-reinforce bracket body
-    for(x = [0:2]) {
-        translate([
-            bracket_cross_vec_x[x] + bracket_reinforce_offset_x,
-            bracket_width / 2 - bracket_cross_reinforce_length / 2 - 5,
-            -bracket_reinforce_depth])
-            rotate(a=45, v=[0, 0, 1]) cube([bracket_cross_reinforce_width, bracket_cross_reinforce_length, bracket_reinforce_depth]);
-    }
 }
 
 
