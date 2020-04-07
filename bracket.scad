@@ -73,6 +73,8 @@ top_tab_useless_notch_width = top_tab_screw_groove_distance - top_tab_screw_groo
 top_tab_useless_notch_z = top_tab_length - top_tab_useless_notch_width;
 top_tab_useless_notch_y = top_tab_useless_notch_width / 2 + 8.05 - top_tab_useless_notch_length / 2;
 
+top_tab_depth = bracket_depth * 3;
+
 module prism(l, w, h){
        polyhedron(
                points=[[0,0,0], [l,0,0], [l,w,0], [0,w,0], [0,w,h], [l,w,h]],
@@ -82,16 +84,16 @@ module prism(l, w, h){
 
 // top tab
 
-translate([0, -top_tab_y, 0]) difference() {
-    cube([bracket_depth, top_tab_width, top_tab_length + bracket_depth]);
+translate([-top_tab_depth + bracket_depth, -top_tab_y, 0]) difference() {
+    cube([top_tab_depth, top_tab_width, top_tab_length + bracket_depth]);
     translate([-.5, -1, top_tab_screw_groove_translate_z + bracket_depth]) {
-        cube([bracket_depth + 1, top_tab_screw_groove_center * 2, top_tab_screw_groove_dia]);
+        cube([top_tab_depth + 1, top_tab_screw_groove_center * 2, top_tab_screw_groove_dia]);
         translate([1, top_tab_screw_groove_center * 2, top_tab_screw_groove_dia / 2])
             rotate([0, 90, 0])
-            cylinder(r=top_tab_screw_groove_dia / 2, h=2, $fn=20, center=true);
+            cylinder(r=top_tab_screw_groove_dia / 2, h=top_tab_depth * 2, $fn=20, center=true);
     }
     translate([-.5, top_tab_useless_notch_y, top_tab_useless_notch_z + bracket_depth]) {
-        cube([bracket_depth + 1, top_tab_useless_notch_length, top_tab_useless_notch_width + 1]);
+        cube([top_tab_depth + 1, top_tab_useless_notch_length, top_tab_useless_notch_width + 1]);
     }
 }
 
