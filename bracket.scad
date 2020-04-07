@@ -1,6 +1,3 @@
-include <threads.scad>;
-
-
 bracket_length = 120.02;
 bracket_width_length = 112.78;
 bottom_tab_width = 10.19;
@@ -20,12 +17,11 @@ bracket_hole_distance = 107.01;
 bracket_bottom_tab_angle_length = (bracket_width - bottom_tab_width) / 2;
 
 screw_mount_width = 9;
-screw_mount_depth = bracket_depth * 3;
-screw_mount_thread_dia = 0.1120; // inches
-screw_mount_thread_tpi = 40;
+screw_mount_depth = bracket_depth * 4;
+screw_mount_hole_r = 1.55; // m3 bolt
 screw_mount_thread_distance_base = 0.5675;
-screw_mount_bulk_r = 2.5;
-screw_mount_bulk_depth = 1;
+screw_mount_inset_r = 2.9; // m3 bolt head
+screw_mount_inset_depth = 2;
 screw_mount_caulking = 2;
 
 // Slot for the CF Card
@@ -99,9 +95,6 @@ module screwmount(x) {
         difference() {
             union() {
                 cube([screw_mount_width, screw_mount_depth, screw_mount_length]);
-                translate([screw_mount_width / 2, screw_mount_depth, screw_mount_length - screw_mount_thread_distance])
-                    rotate([0, 90, 90])
-                    cylinder(r=screw_mount_bulk_r, h=screw_mount_bulk_depth, $fn=6);
                 // add just a tiny bit of stuff to make the connection better
                 difference() {
                     translate([0, -.5 * screw_mount_caulking, screw_mount_length - screw_mount_caulking * .5])
@@ -110,9 +103,11 @@ module screwmount(x) {
                 }
             }
             translate([screw_mount_width / 2, -2, screw_mount_length - screw_mount_thread_distance])
-                rotate([0, 90, 90]) english_thread(
-                    diameter=screw_mount_thread_dia,
-                    threads_per_inch=screw_mount_thread_tpi, length=screw_mount_depth / 5);
+                rotate([0, 90, 90]) cylinder(r=screw_mount_hole_r, h=10, $fn=20);
+            translate([screw_mount_width / 2, screw_mount_depth - screw_mount_inset_depth + 0.01,
+                screw_mount_length - screw_mount_thread_distance])
+                    rotate([0, 90, 90])
+                    cylinder(r=screw_mount_inset_r, h=screw_mount_inset_depth, $fn=20);
         }
 }
 
