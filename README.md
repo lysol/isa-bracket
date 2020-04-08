@@ -1,5 +1,4 @@
 # A 3D-Printable ISA Expansion Card Bracket
-========================
 
 ![Photo of 2 3D Printed ISA card brackets](https://i.imgur.com/GLypbM1.jpg)
 
